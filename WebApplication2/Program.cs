@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Routing.Template;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,27 +11,19 @@ var app = builder.Build();
 
 app.UseCors(x =>
 {
-    x.AllowAnyOrigin();
     x.AllowAnyHeader();
     x.AllowAnyMethod();
+    x.AllowAnyOrigin();
 });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(x =>
-    {
-        x.RouteTemplate = "aggregator-api/{documentName}/swagger.json";
-    });
-    app.UseSwaggerUI(x =>
-    {
-        x.SwaggerEndpoint("https://localhost:7152/swagger/v1/swagger.json", "Banana API");
-        x.SwaggerEndpoint("https://localhost:7084/swagger/v1/swagger.json", "Grapefruit API");
-    });
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseAuthorization();
 
