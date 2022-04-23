@@ -19,12 +19,9 @@ app.UseCors(x =>
 });
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
-    app.UseSwagger(x =>
-    {
-        x.RouteTemplate = "aggregator-api/{documentName}/swagger.json";
-    });
+    app.UseSwagger();
     app.UseSwaggerUI(x =>
     {
         x.SwaggerEndpoint("https://localhost:7152/swagger/v1/swagger.json", "Banana API");
