@@ -1,7 +1,23 @@
 ﻿# Swagger Aggregator Example
 
 ## How do I use a setup like this?
-1. Enable CORS
+1. Enable CORS (be sure to add it before `UseSwagger()` or `UseSwaggerUI()`
+```c#
+app.UseCors(x =>
+{
+    //add CORS configuration here, before app.UseSwagger() or app.useSwaggerUI()
+});
+
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(x =>
+    {
+        x.SwaggerEndpoint("https://localhost:7152/swagger/v1/swagger.json", "Banana API");
+        x.SwaggerEndpoint("https://localhost:7084/swagger/v1/swagger.json", "Grapefruit API");
+    });
+}
+```
 2. Enable staging environment to serve Swagger documents while deployed (since you probably don't want to deploy in debug mode ;) )
 3. Add a swagger endpoint for every microservice you want to show information for. The second string param will show as the selectable option in the dropbox:
 ```c#
